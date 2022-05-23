@@ -1,0 +1,4 @@
+$ cd websystem
+$ node index.js
+App is now running at http://localhost:9000/
+Hit CTRL-C to stop the server

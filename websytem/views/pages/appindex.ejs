@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<% include ../partials/header.ejs %>
+	</head>
+	<body>
+    <% include ../partials/nav2.ejs %>
+    <br>
+    <div>
+      <h1>Chat App</h1>
+      <p>Time: <%= chattime %></p>
+      <b><%= pd %></b>
+    </div>
+    <br>
+    <div class="row">
+      <div class="info">
+        <img src="/images/d5pink.jpg" alt="Pink">
+      </div>
+      <div class="info">
+        <img src="/images/d5purple.jpg" alt="Purple">
+      </div>
+      <div class="info">
+        <img src="/images/pro2020.jpg" alt="Purple">
+      </div>
+    </div>
+    <br>
+    <b>ChatApp1</b>
+    <div>
+      <form class="frmlogin" action="/chatapp/onlinechat1" method="post">
+        <div class="dvcont">
+          <label>Name:</label><br>
+          <input class="cinpt" type="text" id="name" name="name" placeholder="name" maxlength="190" required />
+        </div>
+        <div class="dvcont">
+          <label>ChatToken:</label><br>
+          <input class="cinpt" type="text" id="chattoken" name="chattoken" value="<%= chattoken1 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <div class="dvcont">
+          <label>Ref:</label><br>
+          <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken2 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <p><input type="submit" id="btnConnect" value="Connect"/></p>
+      </form>
+    <div>
+    <hr>
+    <b>ChatApp2</b>
+    <br>
+    <div>
+      <form class="frmlogin" action="/chatapp/onlinechat2" method="post">
+        <div class="dvcont">
+          <label>Name:</label><br>
+          <input class="cinpt" type="text" id="name" name="name" placeholder="name" maxlength="190" required />
+        </div>
+        <div class="dvcont">
+          <label>ChatToken:</label><br>
+          <input class="cinpt" type="text" id="chattoken" name="chattoken" value="<%= chattoken2 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <div class="dvcont">
+          <label>Ref:</label><br>
+          <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken1 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <p><input type="submit" id="btnConnect" value="Connect"/></p>
+      </form>
+    <div>
+    <br>
+    <div>
+      <img src="/images/pro2020.jpg" alt="Purple">
+    </div>
+    <hr>
+    <footer>
+      <br>
+      <div id="dvsize"></div>
+      <br>
+    </footer>
+    <script src="/js/app.js"></script>
+	</body>
+</html>

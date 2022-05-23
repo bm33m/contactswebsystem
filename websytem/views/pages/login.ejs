@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<% include ../partials/header.ejs %>
+	</head>
+	<body>
+    <% include ../partials/nav2.ejs %>
+    <br>
+    <h1>Users App</h1>
+    <div class="row">
+      <div class="info">
+        <p>Time: <%= chattime %></p>
+        <b><%= pd %></b>
+      </div>
+      <div class="info">
+        <p><!-- Time --></p>
+        <p id="ptime2">{{ time }}</p>
+        <p id="pduration"></p>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div>
+        <h1>Contacts websystem</h1>
+      </div>
+    </div>
+    <br>
+    <b>Login</b>
+    <p><%= message %></p>
+    <div>
+      <form class="frmlogin" action="/usersapp/login" method="post">
+        <div class="dvcont">
+          <label>username:</label><br>
+          <input class="cinpt" type="text" id="username" name="username" placeholder="username" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>password:</label><br>
+          <input class="cinpt" type="password" id="loginpassword" name="loginpassword" value="" placeholder="password" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>Ref:</label><br>
+          <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken2 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <p><input type="submit" id="btnLogin" value="Login"/></p>
+      </form>
+    <div>
+    <hr>
+    <br>
+    <div>
+      <img src="/images/pro2020.jpg" alt="Purple">
+    </div>
+    <hr>
+    <footer>
+      <br>
+      <div id="dvsize"></div>
+      <br>
+    </footer>
+    <script src="/js/app.js"></script>
+    <script src="/js/main.js"></script>
+	</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<% include ../partials/header.ejs %>
+	</head>
+	<body>
+    <% include ../partials/nav2.ejs %>
+    <br>
+    <h1>Users App</h1>
+    <div class="row">
+      <div class="info">
+        <p>Time: <%= chattime %></p>
+        <b><%= pd %></b>
+      </div>
+      <div class="info">
+        <p><!-- Time --></p>
+        <p id="ptime2">{{ time }}</p>
+        <p id="pduration"></p>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div>
+        <h1>Contacts Admin websystem</h1>
+      </div>
+    </div>
+    <br>
+    <b>Admin</b>
+    <br>
+    <h1>Update Contacts<h1>
+    <div>
+      <form class="frmlogin" action="/admin/update" method="post">
+        <div class="dvcont">
+          <label>Name:</label><br>
+          <input class="cinpt" type="text" id="firstname" name="firstname" value="{{ firstname }}" placeholder="name" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>Surname:</label><br>
+          <input class="cinpt" type="text" id="surname" name="surname" value="{{ surname }}" placeholder="surname" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>Username:</label><br>
+          <input class="cinpt" type="text" id="username" name="username" placeholder="username" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>Password:</label><br>
+          <input class="cinpt" type="password" id="userpassword" name="userpassword" value="" placeholder="password" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>email:</label><br>
+          <input class="cinpt" type="email" id="email" name="email" value="{{ email }}" placeholder="email" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>Home number:</label><br>
+          <input class="cinpt" type="text" id="homenumber" name="homenumber" value="{{ homenumber }}" placeholder="homenumber" maxlength="299"/>
+        </div>
+        <div class="dvcont">
+          <label>Cell number:</label><br>
+          <input class="cinpt" type="text" id="cellnumber" name="cellnumber" value="{{ cellnumber }}" placeholder="cellnumber" maxlength="299" />
+        </div>
+        <div class="dvcont">
+          <label>Notes title:</label><br>
+          <p><textarea id="notestitle" name="notestitle" placeholder="notestitle." rows="2" maxlength="250">{{ notestitle }}</textarea></p>
+        </div>
+        <div class="dvcont">
+          <label>Notes description:</label><br>
+          <p><textarea id="notesdescription" name="notesdescription" placeholder="notesdescription." rows="3" maxlength="999">{{ notesdescription }}</textarea></p>
+        </div>
+        <div class="dvcont">
+          <label>Ref:</label><br>
+          <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken1 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <p><input type="submit" id="btnUpdate" value="Update"/></p>
+      </form>
+    <div>
+    <br>
+    <b>Delete User ID</b>
+    <div>
+      <form class="frmlogin" action="/admin/deleteuserid" method="post">
+        <div class="dvcont">
+          <label>User ID:</label><br>
+          <input class="cinpt" type="text" id="deleteuserid" name="deleteuserid" placeholder="delete_user_id" value="<%= userid %>" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>Ref:</label><br>
+          <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken2 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <p><input type="submit" id="btnDeleteID" value="DeleteID"/></p>
+      </form>
+    <div>
+    <br>
+    <br>
+    <b>Batch Deletion</b>
+    <div>
+      <form class="frmlogin" action="/admin/batchdeletion" method="post">
+        <div class="dvcont">
+          <label>Delete Records:</label><br>
+          <input class="cinpt" type="text" id="deleterecords" name="deleterecords" placeholder="deleterecords" value="<%= records %>" maxlength="299" required />
+        </div>
+        <div class="dvcont">
+          <label>Ref:</label><br>
+          <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken2 %>" placeholder="chattoken" maxlength="190" required />
+        </div>
+        <p><input type="submit" id="btnDeleteRecords" value="DeleteRecords"/></p>
+      </form>
+    <div>
+    <br>
+    <div>
+      <img src="/images/pro2020.jpg" alt="Purple">
+    </div>
+    <hr>
+    <footer>
+      <br>
+      <div id="dvsize"></div>
+      <br>
+    </footer>
+    <script src="/js/app.js"></script>
+    <script src="/js/main.js"></script>
+	</body>
+</html>

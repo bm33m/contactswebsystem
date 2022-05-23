@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<% include ../partials/header.ejs %>
+	</head>
+	<body>
+    <% include ../partials/nav2.ejs %>
+    <br>
+    <h1>Users App</h1>
+    <div class="row">
+      <div class="info">
+        <p>Time: <%= chattime %></p>
+        <b><%= pd %></b>
+      </div>
+      <div class="info">
+        <p><!-- Time --></p>
+        <p id="ptime2">{{ time }}</p>
+        <p id="pduration"></p>
+      </div>
+    </div>
+    <br>
+    <div>
+      <div>
+        <h1>Contacts websystem</h1>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="info">
+        <img src="/images/d5pink.jpg" alt="Pink">
+      </div>
+      <div class="info">
+        <img src="/images/d5purple.jpg" alt="Purple">
+      </div>
+      <div class="info">
+        <img src="/images/pro2020.jpg" alt="Purple">
+      </div>
+    </div>
+    <br>
+    <div>
+      <h2>Contacts:</h2>
+      <br>
+      <b>Search User ID</b>
+      <div>
+        <form class="frmlogin" action="/usersapp/searchid" method="post">
+          <div class="dvcont">
+            <label>Search Contacts:</label><br>
+            <input class="cinpt" type="text" id="searchid" name="searchid" placeholder="search_user_id" value="<%= userid %>" maxlength="299" required />
+          </div>
+          <div class="dvcont">
+            <label>Ref:</label><br>
+            <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken2 %>" placeholder="chattoken2" maxlength="190" required />
+          </div>
+          <p><input type="submit" id="btnSearchID" value="SearchID"/></p>
+        </form>
+      <div>
+      <br>
+      <b>Search Contacts</b>
+      <div>
+        <form class="frmlogin" action="/usersapp/searchcontacts" method="post">
+          <div class="dvcont">
+            <label>Search Contacts:</label><br>
+            <input class="cinpt" type="text" id="searchcontacts" name="searchcontacts" placeholder="searchcontacts" value="<%= searchContacts %>" maxlength="299" required />
+            <label>Order by:</label>
+            name <input class="cinpt01" type="radio" id="searchtype" name="searchtype" value="name" checked>
+            surname <input class="cinpt01" type="radio" id="searchtype2" name="searchtype" value="surname">
+            emale <input class="cinpt01" type="radio" id="searchtype3" name="searchtype" value="email">
+          </div>
+          <div class="dvcont">
+            <label>Ref:</label><br>
+            <input class="cinpt" type="text" id="ref" name="ref" value="<%= chattoken %>" placeholder="chattoken" maxlength="190" required />
+          </div>
+          <p><input type="submit" id="btnSearchcontacts" value="searchcontacts"/></p>
+        </form>
+      <div>
+      <hr>
+    </div>
+    <div>
+      <p><textarea id="chatmessage" name="chatmessage" placeholder="Message." rows="3" maxlength="250"><%= message %></textarea></p>
+      <p><%= message %></p>
+    </div>
+    <div class="pmessage">
+      <p id="results"><%= results %></p>
+      <p id="contacts"><%= contacts %></p>
+    </div>
+    <div>
+      <img src="/images/pro2020.jpg" alt="Purple">
+    </div>
+    <hr>
+    <footer>
+      <br>
+      <div id="dvsize"></div>
+      <br>
+    </footer>
+    <script src="/js/app.js"></script>
+    <script src="/js/main.js"></script>
+	</body>
+</html>
