@@ -4,7 +4,11 @@ var path = require('path');
 var url = require('url');
 var fs = require('fs');
 const restcontacts = require('./contacts/usersapp');
-//const restadmin = require('./admin/adminapp');
+const restadmin = require('./admin/adminapp');
+const filteradmin = require('./admin/filtercontacts');
+//const deleteadmin = require('./admin/deletecontacts');
+//const updateadmin = require('./admin/updatecontacts');
+
 
 var appport = 9000;
 var httpsport = 9090;
@@ -48,7 +52,8 @@ app.get('/register', function(req, res) {
   let pd = pc++;
   console.log("Register: "+ dbTime()+", #: "+ pc++);
   res.render('pages/register', {chattime: dbTime(), pd: pd,
-  chattoken1: chatid(), chattoken2: chatid()});
+  chattoken1: chatid(), chattoken2: chatid(),
+  results: "", message: pd});
 });
 
 app.get('/login', function(req, res) {
@@ -56,7 +61,7 @@ app.get('/login', function(req, res) {
   console.log("Login: "+ dbTime()+", #: "+ pc++);
   res.render('pages/login', {chattime: dbTime(), pd: pd,
   chattoken1: chatid(), chattoken2: chatid(),
-  message: pd});
+  message: pd, results: ""});
 });
 
 app.get('/logout', function(req, res) {
@@ -91,11 +96,18 @@ app.get('/contacts', function(req, res) {
   console.log("Contacts: "+ dbTime() +", chatd: "+ chatid() +", #: "+ pc++);
   console.log("Req: "+req+", "+data+", "+req["name"]+", "+req.name)
   console.log("Req: "+data.name)
-  res.render('pages/contacts', {name: 'guest'+pd, chattoken: chatid(),
-  chatsid: chatid()});
+  //res.render('pages/contacts', {name: 'guest'+pd, chattoken: chatid(),
+  //chatsid: chatid(),
+  //results: ""});
+  res.render('pages/contacts', {chattime: dbTime(), pd: pd,
+  searchContacts: "searchContacts", searchtype: "searchtype",
+  results: chatid(),
+  message: "message: "+pd, chattoken: chatid(),
+  chattoken2: chatid(), userid: "", contacts: "",
+  results: ""});
 });
 
-app.post('/usersapp/login', function(req, res) {
+app.post('/usersapp/login', async function(req, res) {
   var data = req.body;
   var pd = pc++;
   var username = data.username;
@@ -105,14 +117,16 @@ app.post('/usersapp/login', function(req, res) {
   console.log("Req: "+username+", "+password);
   var pd = pc++;
   var username2 = restcontacts.checkData(username);
-  var message = " Welcome back "+username2+", Busyy Verifiying Password..."+pd;
+  var message = " Welcome back "+username2+", Verifiying Password... in Pogress..."+pd;
   var hashPassword = restcontacts.checkPassword(username2, password);
+  var dbResults = await restadmin.loginUsers(data, hashPassword, res, pd);
 
   console.log("Login: "+ dbTime()+", #: "+hashPassword+", "+ pc++);
   message = message+" "+hashPassword;
-  res.render('pages/login', {chattime: dbTime(), pd: pd,
-  chattoken1: chatid(), chattoken2: chatid(),
-  message: message});
+  console.log("Login: "+ dbTime()+", \n#: "+message+",\n dbResults: "+dbResults+", \nref:"+ pc++);
+  //res.render('pages/login', {chattime: dbTime(), pd: pd,
+  //chattoken1: chatid(), chattoken2: chatid(),
+  //message: message, results: dbResults});
 });
 
 app.post('/usersapp/register', function(req, res) {
@@ -124,14 +138,14 @@ app.post('/usersapp/register', function(req, res) {
   var contactsid = restcontacts.contactsUUID(chatid());
   var username2 = restcontacts.checkData(username);
   var hashPassword = restcontacts.checkPassword(username2, password);
-  //var dbResults = restadmin.postContacts(data, hashPassword, contactsid);
+  var dbResults = restadmin.registerContacts(data, hashPassword, contactsid, res);
 
   console.log("Register: "+ dbTime() +", chatd: "+ chatid() +", contactsid: "+contactsid+", #: "+ pc++);
   console.log("Post Register: "+ dbTime() +", chatd: "+ chatid() +", #: "+ pc++);
   console.log("Req: "+req+", "+data+", \n dbResults: "+dbResults);
   console.log("Req: "+data.name+", "+data.surname)
-  res.render('pages/register', {name: data.name+pd, chattoken: chatid(),
-  chatsid: chatid()});
+  //res.render('pages/register', {name: data.name+pd, chattoken: chatid(),
+  //chatsid: chatid(), results: dbResults});
 });
 
 app.post('/usersapp/searchcontacts', function(req, res) {
@@ -142,13 +156,18 @@ app.post('/usersapp/searchcontacts', function(req, res) {
   var searchtype = data.searchtype;
   var message = "<h1> Results: </h1> <p>"+searchtype+"</p>";
   console.log("SearchContacts: "+ apptime +", chatd: "+ chatid() +", #: "+ pc++);
-  console.log("Req: "+req+", "+data)
+  console.log("Req: "+req+", "+data);
   console.log("Search Contacts: "+searchContacts+", type: "+searchtype);
+  var dbResults = filteradmin.filterContacts(data, res);
+  console.log("dbResults: "+dbResults);
+
+
   res.render('pages/contacts', {chattime: dbTime(), pd: pd,
   searchContacts: searchContacts, searchtype: searchtype,
   results: chatid(),
   message: message, chattoken: chatid(),
-  chattoken2: chatid(), userid: "", contacts: ""});
+  chattoken2: chatid(), userid: "", contacts: "",
+  results: ""});
 });
 
 app.post('/usersapp/searchid', function(req, res) {
@@ -163,7 +182,8 @@ app.post('/usersapp/searchid', function(req, res) {
   res.render('pages/contacts', {chattime: dbTime(), pd: pd,
   userid: searchid, results: chatid(),
   message: message, chattoken: chatid(),
-  chattoken2: chatid(), searchContacts: "", contacts: ""});
+  chattoken2: chatid(), searchContacts: "", contacts: "",
+  results: ""});
 });
 
 app.post('/admin/update', function(req, res) {

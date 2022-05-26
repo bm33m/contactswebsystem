@@ -39,7 +39,8 @@ modified timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE users (
-userid SERIAL PRIMARY KEY,
+id SERIAL PRIMARY KEY,
+userid int NOT NULL,
 name varchar (299) NOT NULL,
 surname varchar (299),
 soft_deleted varchar (3),

@@ -42,10 +42,12 @@
       <br>
       <b>Search User ID</b>
       <div>
-        <form class="frmlogin" action="/usersapp/searchid" method="post">
+        <form class="frmlogin" action="/usersapp/searchcontacts" method="post">
           <div class="dvcont">
             <label>Search Contacts:</label><br>
-            <input class="cinpt" type="text" id="searchid" name="searchid" placeholder="search_user_id" value="<%= userid %>" maxlength="299" required />
+            <input class="cinpt" type="text" id="searchcontacts009" name="searchcontacts" placeholder="searchcontacts" value="<%= userid %>" maxlength="299" required />
+            <input class="cinpt" type="text" id="searchid" name="searchid" placeholder="search_user_id" value="<%= userid %>" maxlength="299" hidden />
+            <input class="cinpt01" type="text" id="searchtype09" name="searchtype" value="userid" hidden>
           </div>
           <div class="dvcont">
             <label>Ref:</label><br>

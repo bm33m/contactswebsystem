@@ -1,4 +1,18 @@
 $ cd websystem
+$ npm install
+
 $ node index.js
 App is now running at http://localhost:9000/
 Hit CTRL-C to stop the server
+
+
+The app uses postgres db.
+The sql code is at assets/contactsdb.sql
+
+1. Create new db user.
+2. Connect new db user.
+3. Create new database.
+4. Connect to new database.
+5. Create tables.
+6. Use the the new database and tables.
+7. Enjoy.

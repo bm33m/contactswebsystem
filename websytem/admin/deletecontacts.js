@@ -1,0 +1,9 @@
+////////////////////////////////////////////
+//
+// deletecontacts.js
+// Author: Brian M
+//
+///////////////////////////////////////////
+
+const db = require('../services/dbpool');
+const dbvalid = require('../services/dbvalidators');

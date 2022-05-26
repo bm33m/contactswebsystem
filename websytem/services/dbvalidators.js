@@ -215,6 +215,13 @@ const dbTime = () => {
   return now.getHours()+":"+now.getMinutes()+":"+now.getSeconds()+"::"+now.getMilliseconds();
 };
 
+const chatid = () => {
+  let rnd = Math.random().toString(36);
+  let pstr = '0000000000000000000';
+  let rndid = (rnd+pstr).substr(2, 16);
+  return rndid;
+}
+
 module.exports = {
   generateProductCode,
   checkCategoryCode,
@@ -227,5 +234,6 @@ module.exports = {
   dbpaginator,
   dbDate,
   dbTime,
-  dbDateTime
+  dbDateTime,
+  chatid
 }
