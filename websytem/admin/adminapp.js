@@ -9,12 +9,29 @@ const db = require('../services/dbpool');
 const dbvalid = require('../services/dbvalidators');
 
 
-let registerContacts = async (data, password, contactsuuid, res) =>{
+let registerContacts = async (data, ref, res) =>{
   try {
     //let sqlString1 = 'INSERT INTO users (name, surname) VALUES ($1, $2)';
     //let sqlValues1 = [data.name, data.surname];
+    let username = await dbvalid.checkData(data.username);
+    let password = await dbvalid.checkData(data.password);
+    let hashPassword = await dbvalid.db3hashData(username+"+"+password);
+    let contactsUUID = dbvalid.contactsUUID(ref);
+    let contacts = [{
+      name: await dbvalid.checkData(data.name),
+      surname: await dbvalid.checkData(data.surname),
+      username: username,
+      password: hashPassword,
+      contacts_identifier: contactsUUID,
+      email: await dbvalid.checkData(data.email),
+      cell_number: await dbvalid.checkData(data.cell_number),
+      home_number: await dbvalid.checkData(data.home_number),
+      title: await dbvalid.checkData(data.title),
+      description: await dbvalid.checkData(data.description),
+      user_id: ref
+    }];
     let sqlString1 = 'INSERT INTO usersdb (name, surname, username, password, contacts_identifier, email, home_number, cell_number, title, description) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)';
-    let sqlValues = [data.name, data.surname, data.username, password, contactsuuid, data.email, data.home_number, data.cell_number, data.title, data.description];
+    let sqlValues = [contacts[0].name, contacts[0].surname, contacts[0].username, contacts[0].password, contacts[0].contacts_identifier, contacts[0].email, contacts[0].home_number, contacts[0].cell_number, contacts[0].title, contacts[0].description];
     db.pool.query(sqlString, sqlValues, (err, results) => {
       if (err) {
         console.log(" postContactsDb dberror: "+err);
@@ -170,7 +187,7 @@ const processContacts = async (data, contacts_identifier, hashPassword) => {
       } else {
         let resultsRows = results["rows"];
         let resultsLength = results["rows"].length;
-        let userid = results["rows"]["userid"];
+        let userid = results["rows"][0]["userid"];
         let dblogin2 = (resultsLength > 0) ? 1 : 0;
         let subject = "#getUserID: "+dblogin2+", userid: "+userid;
         let message = "<h1>"+subject+"</h1>\n"+resultsRows+"\n"+resultsLength;

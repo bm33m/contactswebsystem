@@ -32,39 +32,39 @@
       <form class="frmlogin" action="/admin/update" method="post">
         <div class="dvcont">
           <label>Name:</label><br>
-          <input class="cinpt" type="text" id="firstname" name="firstname" value="{{ firstname }}" placeholder="name" maxlength="299" required />
+          <input class="cinpt" type="text" id="firstname" name="firstname" value="<%= contacts['name'] %>" placeholder="name" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Surname:</label><br>
-          <input class="cinpt" type="text" id="surname" name="surname" value="{{ surname }}" placeholder="surname" maxlength="299" required />
+          <input class="cinpt" type="text" id="surname" name="surname" value="<%= contacts['surname'] %>" placeholder="surname" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Username:</label><br>
-          <input class="cinpt" type="text" id="username" name="username" placeholder="username" maxlength="299" required />
+          <input class="cinpt" type="text" id="username" name="username" value="<%= contacts['username'] %>" placeholder="username" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Password:</label><br>
-          <input class="cinpt" type="password" id="userpassword" name="userpassword" value="" placeholder="password" maxlength="299" required />
+          <input class="cinpt" type="password" id="userpassword" name="userpassword" value="<%= contacts['password'] %>" placeholder="password" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>email:</label><br>
-          <input class="cinpt" type="email" id="email" name="email" value="{{ email }}" placeholder="email" maxlength="299" required />
+          <input class="cinpt" type="email" id="email" name="email" value="<%= contacts['email'] %>" placeholder="email" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Home number:</label><br>
-          <input class="cinpt" type="text" id="homenumber" name="homenumber" value="{{ homenumber }}" placeholder="homenumber" maxlength="299"/>
+          <input class="cinpt" type="text" id="homenumber" name="homenumber" value="<%= contacts['home_number'] %>" placeholder="home_number" maxlength="299"/>
         </div>
         <div class="dvcont">
           <label>Cell number:</label><br>
-          <input class="cinpt" type="text" id="cellnumber" name="cellnumber" value="{{ cellnumber }}" placeholder="cellnumber" maxlength="299" />
+          <input class="cinpt" type="text" id="cellnumber" name="cellnumber" value="<%= contacts['cell_number'] %>" placeholder="cell_number" maxlength="299" />
         </div>
         <div class="dvcont">
           <label>Notes title:</label><br>
-          <p><textarea id="notestitle" name="notestitle" placeholder="notestitle." rows="2" maxlength="250">{{ notestitle }}</textarea></p>
+          <p><textarea id="notestitle" name="notestitle" placeholder="notestitle." rows="2" maxlength="250"><%= contacts['notes'] %></textarea></p>
         </div>
         <div class="dvcont">
           <label>Notes description:</label><br>
-          <p><textarea id="notesdescription" name="notesdescription" placeholder="notesdescription." rows="3" maxlength="999">{{ notesdescription }}</textarea></p>
+          <p><textarea id="notesdescription" name="notesdescription" placeholder="notesdescription." rows="3" maxlength="999"><%= contacts['description'] %></textarea></p>
         </div>
         <div class="dvcont">
           <label>Ref:</label><br>

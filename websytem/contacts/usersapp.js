@@ -20,7 +20,7 @@ function checkPassword(username, data, option = 0){
     var dl1 = data.length;
     var data2 = data.trim();
     var dat3 = username.trim();
-    var password = data2+" "+dat3;
+    var password = data2+"+"+dat3;
     var dl = data2.length;
     console.log(dbTime(), "checkData01: "+data2+" "+dl+": "+dl1+" option: "+option);
     if((data2.length) && (dl < 1350)){

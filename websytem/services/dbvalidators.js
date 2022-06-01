@@ -70,7 +70,7 @@ let checkData = async (data, option = 0) => {
     var data2 = data.trim();
     var dl = data2.length;
     //console.log(dbTime(), "checkData01: "+data2+" "+dl+": "+dl1+" option: "+option);
-    if((data2.length) && (dl < 350)){
+    if((data2.length) && (dl < 1350)){
       return data2;
     }
   } catch (e) {
@@ -209,6 +209,20 @@ const dbDateTime = () => {
   return now.getFullYear()+"/"+(now.getMonth()+1)+"/"+now.getDate()+" "+now.getHours()+":"+now.getMinutes()+":"+now.getSeconds()+"::"+now.getMilliseconds();
 };
 
+let contactsUUID = (data) =>{
+  let contactsUUIDv4 = data;
+  try {
+    const uuidv4 = require('uuid/v4');
+    contactsUUIDv4 = uuidv4();
+    return contactsUUIDv4;
+  } catch (e) {
+    console.log(dbTime()+"\n#00 UUIDv4: "+e);
+  } finally {
+    console.log(dbTime()+"\n Data:"+data+" "+"\n#00 UUIDv4: "+contactsUUIDv4);
+  }
+  return contactsUUIDv4;
+}
+
 //Time.
 const dbTime = () => {
   let now = new Date();
@@ -223,6 +237,7 @@ const chatid = () => {
 }
 
 module.exports = {
+  contactsUUID,
   generateProductCode,
   checkCategoryCode,
   checkData,

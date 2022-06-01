@@ -45,7 +45,7 @@
         <form class="frmlogin" action="/usersapp/searchcontacts" method="post">
           <div class="dvcont">
             <label>Search Contacts:</label><br>
-            <input class="cinpt" type="text" id="searchcontacts009" name="searchcontacts" placeholder="searchcontacts" value="<%= userid %>" maxlength="299" required />
+            <input class="cinpt" type="text" id="searchcontacts009" name="searchcontacts" placeholder="searchid" value="<%= userid %>" maxlength="299" required />
             <input class="cinpt" type="text" id="searchid" name="searchid" placeholder="search_user_id" value="<%= userid %>" maxlength="299" hidden />
             <input class="cinpt01" type="text" id="searchtype09" name="searchtype" value="userid" hidden>
           </div>
@@ -76,6 +76,35 @@
         </form>
       <div>
       <hr>
+    </div>
+    <div>
+      <table cellpadding="3" cellspasing="2" border="1" width="98%">
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Email</th>
+          <th>Cell number</th>
+          <th>Note title</th>
+          <th>Note description</th>
+          <th>User id</th>
+          <th>Update</th>
+          <th>Delete</th>
+        </tr>
+        <% results.forEach(function(contacts) {%>
+          <tr>
+            <td><%= contacts["name"] %></td>
+            <td><%= contacts["surname"] %></td>
+            <td><%= contacts["email"] %></td>
+            <td><%= contacts["cell_number"] %></td>
+            <td><%= contacts["title"] %></td>
+            <td><%= contacts["description"] %></td>
+            <td><%= contacts["userid"] %></td>
+            <td><a href="contacts/update?userid=<%= contacts['userid'] %>&contacts=<%= contacts %>">Update</a></td>
+            <td><a href="contacts/delete?userid=<%= contacts['userid'] %>">Delete</a></td>
+
+          </tr>
+        <%});%>
+      </table>
     </div>
     <div>
       <p><textarea id="chatmessage" name="chatmessage" placeholder="Message." rows="3" maxlength="250"><%= message %></textarea></p>

@@ -6,6 +6,7 @@ var fs = require('fs');
 const restcontacts = require('./contacts/usersapp');
 const restadmin = require('./admin/adminapp');
 const filteradmin = require('./admin/filtercontacts');
+const dbvalid = require('./services/dbvalidators');
 //const deleteadmin = require('./admin/deletecontacts');
 //const updateadmin = require('./admin/updatecontacts');
 
@@ -80,33 +81,74 @@ app.get('/admin', function(req, res) {
   var data = req.body;
   var pd = pc++;
   console.log("Admin: "+ dbTime() +", chatd: "+ chatid() +", #: "+ pc++);
-  console.log("Req: "+req)
-  console.log("Req: "+data.name)
+  console.log("Req: "+req);
+  console.log("Req: "+data.name);
   var userid = data.userid;
   var records = pd;
   res.render('pages/admin', {chattime: dbTime(), pd: pd,
   chattoken1: chatid(), chattoken2: chatid(),
   userid: userid,
-  records: records });
+  records: records,
+  contacts: [] });
 });
 
 app.get('/contacts', function(req, res) {
   var data = req.body;
   var pd = pc++;
   console.log("Contacts: "+ dbTime() +", chatd: "+ chatid() +", #: "+ pc++);
-  console.log("Req: "+req+", "+data+", "+req["name"]+", "+req.name)
-  console.log("Req: "+data.name)
-  //res.render('pages/contacts', {name: 'guest'+pd, chattoken: chatid(),
-  //chatsid: chatid(),
-  //results: ""});
+  console.log("Req: "+req+", "+data+", "+req["name"]+", "+req.name);
+  console.log("Req: "+data.name);
+  let contacts = [{
+    name: "Admin",
+    surname: "Cool",
+    email: "admin1@webapp.org",
+    cell_number: "0123456789",
+    title: "Cool title",
+    description: "Awesome super cool description...",
+    userid: pd
+  }];
   res.render('pages/contacts', {chattime: dbTime(), pd: pd,
   searchContacts: "searchContacts", searchtype: "searchtype",
-  results: chatid(),
   message: "message: "+pd, chattoken: chatid(),
-  chattoken2: chatid(), userid: "", contacts: "",
-  results: ""});
+  chattoken2: chatid(), userid: contacts[0].userid, contacts: contacts,
+  results: contacts});
 });
 
+app.get('/contacts/update', function(req, res) {
+  var data = req.query;
+  var userid = req.query.userid;
+  var contacts = req.query.contacts;
+  var pd = pc++;
+  console.log("contacts/update: "+ dbTime() +", chatd: "+ chatid() +", #: "+ pc++);
+  console.log("Req: "+data);
+  console.log("Userid: "+userid);
+  console.log("Req: "+req);
+  console.log("Contacts: "+contacts);
+  var records = pd;
+  res.render('pages/admin', {chattime: dbTime(), pd: pd,
+  chattoken1: chatid(), chattoken2: chatid(),
+  userid: userid,
+  records: records,
+  contacts: [] });
+});
+
+app.get('/contacts/delete', function(req, res) {
+  var data = req.query;
+  var userid = req.query.userid;
+  var pd = pc++;
+  console.log("Admin: "+ dbTime() +", chatd: "+ chatid() +", #: "+ pc++);
+  console.log("Req: "+data);
+  console.log("Userid: "+userid);
+  console.log("Req: "+req);
+  var records = pd;
+  res.render('pages/admin', {chattime: dbTime(), pd: pd,
+  chattoken1: chatid(), chattoken2: chatid(),
+  userid: userid,
+  records: records,
+  contacts: [] });
+});
+
+//app.post('/usersapp/login2', function(req, res) {});
 app.post('/usersapp/login', async function(req, res) {
   var data = req.body;
   var pd = pc++;
@@ -116,14 +158,19 @@ app.post('/usersapp/login', async function(req, res) {
   console.log("Req: "+req+", "+data);
   console.log("Req: "+username+", "+password);
   var pd = pc++;
-  var username2 = restcontacts.checkData(username);
+  var ref = chatid();
+  //var username20 = restcontacts.checkData(username);
+  var username2 = await dbvalid.checkData(username);
+  var password2 = await dbvalid.checkData(password);
+  var hashPassword = await dbvalid.db3hashData(username2+"+"+password2);
+  var contactsUUID = dbvalid.contactsUUID(ref);
   var message = " Welcome back "+username2+", Verifiying Password... in Pogress..."+pd;
-  var hashPassword = restcontacts.checkPassword(username2, password);
+  //var hashPassword3 = restcontacts.checkPassword(username2, password);
   var dbResults = await restadmin.loginUsers(data, hashPassword, res, pd);
 
-  console.log("Login: "+ dbTime()+", #: "+hashPassword+", "+ pc++);
+  console.log("Login: "+ dbTime()+"\n#Username: "+username2+", \n#hashPassword: "+hashPassword+", \n#contactsUUID: "+contactsUUID+" \n#ref: "+ref);
   message = message+" "+hashPassword;
-  console.log("Login: "+ dbTime()+", \n#: "+message+",\n dbResults: "+dbResults+", \nref:"+ pc++);
+  console.log("Login: "+ dbTime()+", \n#: "+message+",\n dbResults: "+dbResults+", \npd:"+pd);
   //res.render('pages/login', {chattime: dbTime(), pd: pd,
   //chattoken1: chatid(), chattoken2: chatid(),
   //message: message, results: dbResults});
@@ -138,7 +185,8 @@ app.post('/usersapp/register', function(req, res) {
   var contactsid = restcontacts.contactsUUID(chatid());
   var username2 = restcontacts.checkData(username);
   var hashPassword = restcontacts.checkPassword(username2, password);
-  var dbResults = restadmin.registerContacts(data, hashPassword, contactsid, res);
+  var ref = chatid();
+  var dbResults = restadmin.registerContacts(data, ref, res);
 
   console.log("Register: "+ dbTime() +", chatd: "+ chatid() +", contactsid: "+contactsid+", #: "+ pc++);
   console.log("Post Register: "+ dbTime() +", chatd: "+ chatid() +", #: "+ pc++);
@@ -164,10 +212,9 @@ app.post('/usersapp/searchcontacts', function(req, res) {
 
   res.render('pages/contacts', {chattime: dbTime(), pd: pd,
   searchContacts: searchContacts, searchtype: searchtype,
-  results: chatid(),
   message: message, chattoken: chatid(),
-  chattoken2: chatid(), userid: "", contacts: "",
-  results: ""});
+  chattoken2: chatid(), userid: "", contacts: [],
+  results: []});
 });
 
 app.post('/usersapp/searchid', function(req, res) {
@@ -180,10 +227,10 @@ app.post('/usersapp/searchid', function(req, res) {
   console.log("Search User ID: "+searchid );
   var message = "<h1> Results: </h1> <p>"+searchid+"</p>";
   res.render('pages/contacts', {chattime: dbTime(), pd: pd,
-  userid: searchid, results: chatid(),
+  userid: searchid,
   message: message, chattoken: chatid(),
-  chattoken2: chatid(), searchContacts: "", contacts: "",
-  results: ""});
+  chattoken2: chatid(), searchContacts: "", contacts: [],
+  results: []});
 });
 
 app.post('/admin/update', function(req, res) {
@@ -197,7 +244,8 @@ app.post('/admin/update', function(req, res) {
   res.render('pages/admin', {chattime: dbTime(), pd: pd,
   chattoken1: chatid(), chattoken2: chatid(),
   userid: userid,
-  records: records });
+  records: records,
+  contacts: [] });
 });
 
 app.post('/admin/deleteuserid', function(req, res) {
@@ -211,7 +259,8 @@ app.post('/admin/deleteuserid', function(req, res) {
   res.render('pages/admin', {chattime: dbTime(), pd: pd,
   chattoken1: chatid(), chattoken2: chatid(),
   userid: userid,
-  records: records });
+  records: records,
+  contacts: [] });
 });
 
 app.post('/admin/batchdeletion', function(req, res) {
@@ -224,7 +273,7 @@ app.post('/admin/batchdeletion', function(req, res) {
   var records = pd;
   res.render('pages/admin', {chattime: dbTime(), pd: pd,
   chattoken1: chatid(), chattoken2: chatid(),
-  userid: userid,
+  userid: userid, contacts: [],
   records: records });
 });
 
