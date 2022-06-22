@@ -74,7 +74,8 @@ let checkData = async (data, option = 0) => {
       return data2;
     }
   } catch (e) {
-    console.log(dbTime(), "checkData02: "+e+" ////: "+dv++);
+    dv += 1;
+    console.log(dbTime(), "checkData02: "+e+" ////: "+dv);
   }
   //console.log(dbTime(), "checkData03: "+option);
   if (option == 1){

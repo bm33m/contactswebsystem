@@ -29,7 +29,11 @@
     <br>
     <h1>Update Contacts<h1>
     <div>
-      <form class="frmlogin" action="/admin/update" method="post">
+      <form class="frmlogin" action="/admin/updatecontacts" method="post">
+        <div class="dvcont">
+          <label>Userid:</label><br>
+          <input class="cinpt" type="text" id="userid" name="userid" value="<%= contacts['userid'] %>" placeholder="userid" maxlength="299" required />
+        </div>
         <div class="dvcont">
           <label>Name:</label><br>
           <input class="cinpt" type="text" id="firstname" name="firstname" value="<%= contacts['name'] %>" placeholder="name" maxlength="299" required />
@@ -40,11 +44,11 @@
         </div>
         <div class="dvcont">
           <label>Username:</label><br>
-          <input class="cinpt" type="text" id="username" name="username" value="<%= contacts['username'] %>" placeholder="username" maxlength="299" required />
+          <input class="cinpt" type="text" id="username" name="username" value="<%= contacts['username'] %>" placeholder="username" maxlength="299" />
         </div>
         <div class="dvcont">
           <label>Password:</label><br>
-          <input class="cinpt" type="password" id="userpassword" name="userpassword" value="<%= contacts['password'] %>" placeholder="password" maxlength="299" required />
+          <input class="cinpt" type="password" id="password" name="password" value="" placeholder="password" maxlength="299" />
         </div>
         <div class="dvcont">
           <label>email:</label><br>
@@ -52,19 +56,19 @@
         </div>
         <div class="dvcont">
           <label>Home number:</label><br>
-          <input class="cinpt" type="text" id="homenumber" name="homenumber" value="<%= contacts['home_number'] %>" placeholder="home_number" maxlength="299"/>
+          <input class="cinpt" type="text" id="home_number" name="home_number" value="<%= contacts['home_number'] %>" placeholder="home_number" maxlength="299"/>
         </div>
         <div class="dvcont">
           <label>Cell number:</label><br>
-          <input class="cinpt" type="text" id="cellnumber" name="cellnumber" value="<%= contacts['cell_number'] %>" placeholder="cell_number" maxlength="299" />
+          <input class="cinpt" type="text" id="cell_number" name="cell_number" value="<%= contacts['cell_number'] %>" placeholder="cell_number" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Notes title:</label><br>
-          <p><textarea id="notestitle" name="notestitle" placeholder="notestitle." rows="2" maxlength="250"><%= contacts['notes'] %></textarea></p>
+          <p><textarea id="title" name="title" placeholder="notestitle." rows="2" maxlength="250"><%= contacts['title'] %></textarea></p>
         </div>
         <div class="dvcont">
           <label>Notes description:</label><br>
-          <p><textarea id="notesdescription" name="notesdescription" placeholder="notesdescription." rows="3" maxlength="999"><%= contacts['description'] %></textarea></p>
+          <p><textarea id="description" name="description" placeholder="notesdescription." rows="3" maxlength="999"><%= contacts['description'] %></textarea></p>
         </div>
         <div class="dvcont">
           <label>Ref:</label><br>
@@ -95,7 +99,11 @@
       <form class="frmlogin" action="/admin/batchdeletion" method="post">
         <div class="dvcont">
           <label>Delete Records:</label><br>
-          <input class="cinpt" type="text" id="deleterecords" name="deleterecords" placeholder="deleterecords" value="<%= records %>" maxlength="299" required />
+          <input class="cinpt" type="text" id="deleterecords" name="deleterecords" placeholder="deleterecords" value="<%= records[0].soft_deleted %>" maxlength="299" />
+        </div>
+        <div>
+          <p>Records: <%= records[0].contacts %></p>
+          <p>Date: <%= records[0].date_created %></p>
         </div>
         <div class="dvcont">
           <label>Ref:</label><br>
@@ -104,6 +112,10 @@
         <p><input type="submit" id="btnDeleteRecords" value="DeleteRecords"/></p>
       </form>
     <div>
+    <br>
+    <div>
+     <p><%= message %></p>
+    </div>
     <br>
     <div>
       <img src="/images/pro2020.jpg" alt="Purple">

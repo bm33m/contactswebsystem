@@ -63,7 +63,7 @@
           <div class="dvcont">
             <label>Search Contacts:</label><br>
             <input class="cinpt" type="text" id="searchcontacts" name="searchcontacts" placeholder="searchcontacts" value="<%= searchContacts %>" maxlength="299" required />
-            <label>Order by:</label>
+            <label>Filter by:</label>
             name <input class="cinpt01" type="radio" id="searchtype" name="searchtype" value="name" checked>
             surname <input class="cinpt01" type="radio" id="searchtype2" name="searchtype" value="surname">
             emale <input class="cinpt01" type="radio" id="searchtype3" name="searchtype" value="email">
@@ -99,7 +99,7 @@
             <td><%= contacts["title"] %></td>
             <td><%= contacts["description"] %></td>
             <td><%= contacts["userid"] %></td>
-            <td><a href="contacts/update?userid=<%= contacts['userid'] %>&contacts=<%= contacts %>">Update</a></td>
+            <td><a href="contacts/update?userid=<%= contacts['userid'] %>&firstname=<%= contacts['name'] %>&surname=<%= contacts['surname'] %>&email=<%= contacts['email'] %>&cell_number=<%= contacts['cell_number'] %>&title=<%= contacts['title'] %>&description=<%= contacts['description'] %>">Update</a></td>
             <td><a href="contacts/delete?userid=<%= contacts['userid'] %>">Delete</a></td>
 
           </tr>

@@ -31,39 +31,39 @@
       <form class="frmlogin" action="/usersapp/register" method="post">
         <div class="dvcont">
           <label>Name:</label><br>
-          <input class="cinpt" type="text" id="firstname" name="firstname" placeholder="name" maxlength="299" required />
+          <input class="cinpt" type="text" id="firstname" name="firstname" placeholder="name" value="<%= contacts.name %>" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Surname:</label><br>
-          <input class="cinpt" type="text" id="surname" name="surname" placeholder="surname" maxlength="299" required />
+          <input class="cinpt" type="text" id="surname" name="surname" placeholder="surname" value="<%= contacts.surname %>" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Username:</label><br>
-          <input class="cinpt" type="text" id="username" name="username" placeholder="username" maxlength="299" required />
+          <input class="cinpt" type="text" id="username" name="username" placeholder="username" value="" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Password:</label><br>
-          <input class="cinpt" type="password" id="userpassword" name="userpassword" value="" placeholder="password" maxlength="299" required />
+          <input class="cinpt" type="password" id="password" name="password" value="" placeholder="password" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>email:</label><br>
-          <input class="cinpt" type="email" id="email" name="email" placeholder="email" maxlength="299" required />
+          <input class="cinpt" type="email" id="email" name="email" placeholder="email" value="<%= contacts.email %>" maxlength="299" required />
         </div>
         <div class="dvcont">
           <label>Home number:</label><br>
-          <input class="cinpt" type="text" id="homenumber" name="homenumber" placeholder="homenumber" maxlength="299"/>
+          <input class="cinpt" type="text" id="home_number" name="home_number" placeholder="homenumber" value="<%= contacts.home_number %>" maxlength="299"/>
         </div>
         <div class="dvcont">
           <label>Cell number:</label><br>
-          <input class="cinpt" type="text" id="cellnumber" name="cellnumber" placeholder="cellnumber" maxlength="299" />
+          <input class="cinpt" type="text" id="cell_number" name="cell_number" placeholder="cellnumber" value="<%= contacts.cell_number %>" maxlength="299" />
         </div>
         <div class="dvcont">
           <label>Notes title:</label><br>
-          <p><textarea id="notestitle" name="notestitle" placeholder="notestitle." rows="2" maxlength="250"></textarea></p>
+          <p><textarea id="title" name="title" placeholder="notestitle." rows="2" maxlength="250"><%= contacts.title %></textarea></p>
         </div>
         <div class="dvcont">
           <label>Notes description:</label><br>
-          <p><textarea id="notesdescription" name="notesdescription" placeholder="notesdescription." rows="3" maxlength="999"></textarea></p>
+          <p><textarea id="description" name="description" placeholder="notesdescription." rows="3" maxlength="999"><%= contacts.description %></textarea></p>
         </div>
         <div class="dvcont">
           <label>Ref:</label><br>

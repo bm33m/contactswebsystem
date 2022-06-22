@@ -8,8 +8,8 @@
 const db = require('../services/dbpool');
 const dbvalid = require('../services/dbvalidators');
 
-const filterContacts = async (data, res) => {
-  console.log("filterContacts : "+data.type);
+const filterContacts = async (data, contacts, res, pd=0) => {
+  console.log("filterContacts : "+data.searchtype);
   try {
     let searchContacts = data.searchcontacts;
     let searchtype = data.searchtype;
@@ -27,11 +27,18 @@ const filterContacts = async (data, res) => {
     db.pool.query(sqlString, sqlValues, (err, results) => {
       if (err) {
         console.log(" filterContacts dberror: ", err);
-        res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: "",
+        res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: pd,
         searchContacts: searchContacts, searchtype: searchtype,
-        message: "message: "+err, chattoken: dbvalid.chatid(),
-        chattoken2: dbvalid.chatid(), userid: "", contacts: err,
-        results: []});
+        message: "message: "+err+" "+pd, chattoken: dbvalid.chatid(),
+        chattoken2: dbvalid.chatid(), userid: '',
+        contacts: contacts,
+        results: contacts});
+
+        //res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: "",
+        //searchContacts: searchContacts, searchtype: searchtype,
+        //message: "message: "+err, chattoken: dbvalid.chatid(),
+        //chattoken2: dbvalid.chatid(), userid: "", contacts: err,
+        //results: []});
         //return err;
         //res.render('pages/contacts', {chattime: dbTime(), pd: pd,
         //searchContacts: searchContacts, searchtype: searchtype,
@@ -40,21 +47,31 @@ const filterContacts = async (data, res) => {
         //chattoken2: chatid(), userid: "", contacts: "",
         //results: ""});
       } else {
-        let contacts = results["rows"];
+        contacts = results["rows"];
         let resultsLength = results["rows"].length;
-        let userid = results["rows"][0]["userid"];
+        console.log("Contacts: "+contacts, "resultsLength: "+resultsLength);
+        let userid = (resultsLength > 0) ? contacts[0]["userid"] : 0;
         let dblogin2 = (resultsLength > 0) ? 1 : 0;
         let subject = "#getUserID: "+dblogin2+", userid: "+userid;
-        let message = "<h1>"+subject+"</h1>\n"+resultsRows+"\n"+resultsLength;
+        let message = "<h1>"+subject+"</h1>\n"+"\n"+resultsLength;
         console.log(message);
         if (resultsLength > 0) {
           console.log("Results: "+resultsLength);
         }
-        res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: "",
+        res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: pd,
         searchContacts: searchContacts, searchtype: searchtype,
-        message: "message: "+resultsLength, chattoken: dbvalid.chatid(),
-        chattoken2: dbvalid.chatid(), userid: contacts[0].userid, contacts: contacts,
+        message: "message: "+message+" "+pd, chattoken: dbvalid.chatid(),
+        chattoken2: dbvalid.chatid(), userid: userid,
+        contacts: contacts,
         results: contacts});
+        
+        //res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: "",
+        //searchContacts: searchContacts, searchtype: searchtype,
+        //message: "message: "+resultsLength, chattoken: dbvalid.chatid(),
+        //chattoken2: dbvalid.chatid(),
+        //userid: userid,
+        //contacts: contacts,
+        //results: contacts});
 
         //return results["rows"];
         //res.render('pages/contacts', {chattime: dbTime(), pd: pd,
@@ -73,51 +90,42 @@ const filterContacts = async (data, res) => {
   console.log("### 07 ### filterContacts Done: ###");
 };
 
-const getContacts = async (data, res) => {
+const getContacts = async (data, contacts, res, pd=0) => {
   console.log("getContacts : "+data.type);
   try {
     let searchContacts = data.searchcontacts;
     let searchtype = data.searchtype;
     let sqlString = 'SELECT a.userid, a.name, a.surname, b.email, b.cell_number, c.title, c.description FROM users a, contacts b, notes c WHERE a.userid = b.userid AND b.userid = a.userid AND c.userid = a.userid';
-    //if (searchtype == 'name'){
-      sqlString = 'SELECT a.userid, a.name, a.surname, b.email, b.cell_number, c.title, c.description FROM users a, contacts b, notes c WHERE a.name = $1 AND b.userid = a.userid AND c.userid = a.userid';
-    //} else
-    //if (data.searchtype == 'surname'){
-    //  sqlString = 'SELECT a.userid, a.name, a.surname, b.email, b.cell_number, c.title, c.description FROM users a, contacts b, notes c WHERE a.surname = $1 AND b.userid = a.userid AND c.userid = a.userid';
-    //} else
-    //if (data.searchtype == 'email'){
-    //  sqlString = 'SELECT a.userid, a.name, a.surname, b.email, b.cell_number, c.title, c.description FROM users a, contacts b, notes c WHERE b.email = $1 AND a.userid = b.userid AND c.userid = b.userid';
-    //}
-    //let sqlValues = [searchContacts];
-    //db.pool.query(sqlString, sqlValues, (err, results) => {
     db.pool.query(sqlString, (err, results) => {
       if (err) {
         console.log(" getContacts dberror: ", err);
-        return err;
-        //res.render('pages/contacts', {chattime: dbTime(), pd: pd,
-        //searchContacts: searchContacts, searchtype: searchtype,
-        //results: chatid(),
-        //message: message, chattoken: chatid(),
-        //chattoken2: chatid(), userid: "", contacts: "",
-        //results: ""});
+        //return err;
+        res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: pd,
+        searchContacts: searchContacts, searchtype: searchtype,
+        message: "message: "+error+" "+pd, chattoken: dbvalid.chatid(),
+        chattoken2: dbvalid.chatid(), userid: contacts[0].userid,
+        contacts: contacts,
+        results: contacts});
       } else {
-        let resultsRows = results["rows"];
+        contacts = results["rows"];
         let resultsLength = results["rows"].length;
-        let userid = results["rows"]["userid"];
-        let dblogin2 = (resultsLength > 0) ? 1 : 0;
-        let subject = "#getUserID: "+dblogin2+", userid: "+userid;
-        let message = "<h1>"+subject+"</h1>\n"+resultsRows+"\n"+resultsLength;
-        console.log(message);
+        //let userid0 = results["rows"]["userid"];
+        let userid = '';
         if (resultsLength > 0) {
+          userid = contacts[0]["userid"];
           console.log("Results: "+resultsLength);
         }
-        return results["rows"];
-        //res.render('pages/contacts', {chattime: dbTime(), pd: pd,
-        //searchContacts: searchContacts, searchtype: searchtype,
-        //results: chatid(),
-        //message: message, chattoken: chatid(),
-        //chattoken2: chatid(), userid: "", contacts: "",
-        //results: ""});
+        let dblogin2 = (resultsLength > 0) ? 1 : 0;
+        let subject = "#getUserID: "+dblogin2+", userid: "+userid;
+        let message = "<h1>"+subject+"</h1>\n"+contacts+"\n"+resultsLength;
+        console.log(message);
+        //return results["rows"];
+        res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: pd,
+        searchContacts: searchContacts, searchtype: searchtype,
+        message: "message: "+pd, chattoken: dbvalid.chatid(),
+        chattoken2: dbvalid.chatid(), userid: userid,
+        contacts: contacts,
+        results: contacts});
       }
     });
   } catch (e) {

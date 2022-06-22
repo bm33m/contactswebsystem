@@ -1,4 +1,6 @@
 
+var dv = 0;
+
 function checkData(data, option = 0){
   try {
     var dl1 = data.length;
@@ -9,7 +11,8 @@ function checkData(data, option = 0){
       return data2;
     }
   } catch (e) {
-    console.log(dbTime(), "checkData02: "+e+" ////: "+dv++);
+    dv += 1;
+    console.log(dbTime(), "checkData02: "+e+" ////: "+dv);
   }
   //console.log(dbTime(), "checkData03: "+option);
   return null;
@@ -27,7 +30,7 @@ function checkPassword(username, data, option = 0){
       return db3hashData(password);
     }
   } catch (e) {
-    console.log(dbTime(), "checkData02: "+e+" ////: "+dv++);
+    console.log(dbTime(), "checkPassword: "+e+" ////: "+dv);
   }
   //console.log(dbTime(), "checkData03: "+option);
   return null;

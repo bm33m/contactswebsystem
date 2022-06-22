@@ -33,7 +33,7 @@ home_number varchar (30),
 cell_number varchar (30),
 title varchar (299) NOT NULL,
 description TEXT,
-soft_deleted varchar (3),
+soft_deleted varchar (10) DEFAULT 'false',
 created timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
 modified timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
@@ -43,7 +43,7 @@ id SERIAL PRIMARY KEY,
 userid int NOT NULL UNIQUE REFERENCES usersdb (userid) on delete cascade,
 name varchar (299) NOT NULL,
 surname varchar (299),
-soft_deleted varchar (3),
+soft_deleted varchar (10) DEFAULT 'false',
 created timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
 modified timestamp with time zone DEFAULT CURRENT_TIMESTAMP
 );
@@ -147,5 +147,20 @@ SELECT a.userid, a.name, a.surname, b.email, b.cell_number, c.title, c.descripti
   AND a.userid = b.userid
   AND c.userid = b.userid
   ORDER BY b.email;
+
+
+SELECT COUNT(soft_deleted) as soft_deleted,
+  COUNT(userid) as contacts,
+  MAX(modified) as modified
+  FROM users;
+
+
+SELECT * FROM usersdb a
+  WHERE a.created BETWEEN '2022/02/05' AND '2022/09/05'
+  AND a.contacts_identifier = 'c6706583-7427-41f6-8588-997c3ce1f2d2'
+  GROUP BY to_char(a.created, 'DD HH'),
+  a.userid
+  ORDER BY max(a.created) ASC;
+
 
 -- done 2022.
