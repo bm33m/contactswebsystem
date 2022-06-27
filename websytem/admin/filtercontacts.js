@@ -40,12 +40,7 @@ const filterContacts = async (data, contacts, res, pd=0) => {
         //chattoken2: dbvalid.chatid(), userid: "", contacts: err,
         //results: []});
         //return err;
-        //res.render('pages/contacts', {chattime: dbTime(), pd: pd,
-        //searchContacts: searchContacts, searchtype: searchtype,
-        //results: chatid(),
-        //message: message, chattoken: chatid(),
-        //chattoken2: chatid(), userid: "", contacts: "",
-        //results: ""});
+
       } else {
         contacts = results["rows"];
         let resultsLength = results["rows"].length;
@@ -64,7 +59,7 @@ const filterContacts = async (data, contacts, res, pd=0) => {
         chattoken2: dbvalid.chatid(), userid: userid,
         contacts: contacts,
         results: contacts});
-        
+
         //res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: "",
         //searchContacts: searchContacts, searchtype: searchtype,
         //message: "message: "+resultsLength, chattoken: dbvalid.chatid(),
@@ -72,14 +67,6 @@ const filterContacts = async (data, contacts, res, pd=0) => {
         //userid: userid,
         //contacts: contacts,
         //results: contacts});
-
-        //return results["rows"];
-        //res.render('pages/contacts', {chattime: dbTime(), pd: pd,
-        //searchContacts: searchContacts, searchtype: searchtype,
-        //results: chatid(),
-        //message: message, chattoken: chatid(),
-        //chattoken2: chatid(), userid: "", contacts: "",
-        //results: ""});
       }
     });
   } catch (e) {
@@ -102,7 +89,7 @@ const getContacts = async (data, contacts, res, pd=0) => {
         //return err;
         res.render('pages/contacts', {chattime: dbvalid.dbTime(), pd: pd,
         searchContacts: searchContacts, searchtype: searchtype,
-        message: "message: "+error+" "+pd, chattoken: dbvalid.chatid(),
+        message: "message: "+err+" "+pd, chattoken: dbvalid.chatid(),
         chattoken2: dbvalid.chatid(), userid: contacts[0].userid,
         contacts: contacts,
         results: contacts});
